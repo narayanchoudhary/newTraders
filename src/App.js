@@ -1,24 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase';
+
+// Configure Firebase.
+const config = {
+  apiKey: "AIzaSyCTt89jK3vBv8s7U_31IlBxEeluW_K-Ric",
+  authDomain: "simple-1a484.firebaseapp.com",
+  databaseURL: "https://simple-1a484.firebaseio.com",
+  projectId: "simple-1a484",
+  storageBucket: "simple-1a484.appspot.com",
+  messagingSenderId: "825717527488",
+  appId: "1:825717527488:web:7dff0c943a01a654b82e25",
+  measurementId: "G-5LZ6VTTD18"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
+
+// Configure FirebaseUI.
+const uiConfig = {
+  // Popup signin flow rather than redirect flow.
+  signInFlow: 'popup',
+  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+  signInSuccessUrl: '/signedIn',
+  // We will display Google and Facebook as auth providers.
+  signInOptions: [
+    firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+  ],
+};
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          What the fuck are you doing man?
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     </div>
   );
 }
