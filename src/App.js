@@ -6,7 +6,6 @@ import 'firebase/firestore';
 import { FirestoreProvider } from '@react-firebase/firestore';
 import { FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseUnAuthed } from '@react-firebase/auth';
 import { StyledFirebaseAuth } from 'react-firebaseui';
-import { MyAutosuggest } from './components/MyAutosuggest';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { FirestoreCollection } from '@react-firebase/firestore';
