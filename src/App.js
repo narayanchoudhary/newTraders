@@ -1,7 +1,16 @@
 import React from 'react';
 import './App.css';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase';
+import firebase from "firebase/app";
+import "firebase/auth";
+import 'firebase/firestore';
+import { FirestoreProvider } from '@react-firebase/firestore';
+import { FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseUnAuthed } from '@react-firebase/auth';
+import { StyledFirebaseAuth } from 'react-firebaseui';
+import { MyAutosuggest } from './components/MyAutosuggest';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { FirestoreCollection } from '@react-firebase/firestore';
+
 
 // Configure Firebase.
 const config = {
@@ -15,19 +24,19 @@ const config = {
   measurementId: "G-5LZ6VTTD18"
 };
 
+
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
-}else {
+  firebase.firestore().enablePersistence();
+} else {
   firebase.app(); // if already initialized, use that one
 }
 
+
 // Configure FirebaseUI.
 const uiConfig = {
-  // Popup signin flow rather than redirect flow.
   signInFlow: 'popup',
-  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
   signInSuccessUrl: '/signedIn',
-  // We will display Google and Facebook as auth providers.
   signInOptions: [
     firebase.auth.PhoneAuthProvider.PROVIDER_ID,
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -36,10 +45,50 @@ const uiConfig = {
 };
 
 function App() {
+
   return (
-    <div className="App">
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-    </div>
+    <FirebaseAuthProvider firebase={firebase} {...config}>
+      <FirestoreProvider firebase={firebase} {...config}>
+
+        <div className="App">
+          <IfFirebaseAuthed>
+            <div style={{ display: 'flex', justifyContent: 'center', }}>
+              <FirestoreCollection path="/accounts/" orderBy={[{ field: "name", type: "asc" }]} >
+                {accounts => {
+                  return (
+                    <div>
+                      <Autocomplete
+                        id="combo-box-demo"
+                        options={accounts.value}
+                        getOptionLabel={(option) => option.name}
+                        style={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} label="Accounts" variant="outlined" />}
+                        selectOnFocus={true}
+                      />
+                    </div>);
+                }}
+              </FirestoreCollection>
+            </div>
+            {/* <div>
+            <h2>You're signed in 🎉 </h2>
+            <button
+              onClick={async () => {
+                await firebase
+                  .app()
+                  .auth()
+                  .signOut();
+              }}
+            >
+              Sign out
+                  </button>
+          </div> */}
+          </IfFirebaseAuthed>
+          <IfFirebaseUnAuthed>
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+          </IfFirebaseUnAuthed>
+        </div>
+      </FirestoreProvider>
+    </FirebaseAuthProvider>
   );
 }
 
