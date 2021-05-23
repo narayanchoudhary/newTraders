@@ -6,10 +6,7 @@ import 'firebase/firestore';
 import { FirestoreProvider } from '@react-firebase/firestore';
 import { FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseUnAuthed } from '@react-firebase/auth';
 import { StyledFirebaseAuth } from 'react-firebaseui';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { FirestoreCollection } from '@react-firebase/firestore';
-
+import AccountSearch from './components/AccountSearch';
 
 // Configure Firebase.
 const config = {
@@ -48,26 +45,9 @@ function App() {
   return (
     <FirebaseAuthProvider firebase={firebase} {...config}>
       <FirestoreProvider firebase={firebase} {...config}>
-
         <div className="App">
           <IfFirebaseAuthed>
-            <div style={{ display: 'flex', justifyContent: 'center', }}>
-              <FirestoreCollection path="/accounts/" orderBy={[{ field: "name", type: "asc" }]} >
-                {accounts => {
-                  return (
-                    <div>
-                      <Autocomplete
-                        id="combo-box-demo"
-                        options={accounts.value}
-                        getOptionLabel={(option) => option.name}
-                        style={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} label="Accounts" variant="outlined" />}
-                        selectOnFocus={true}
-                      />
-                    </div>);
-                }}
-              </FirestoreCollection>
-            </div>
+            <AccountSearch />
             {/* <div>
             <h2>You're signed in 🎉 </h2>
             <button
