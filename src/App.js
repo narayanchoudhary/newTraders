@@ -6,8 +6,6 @@ import 'firebase/firestore';
 import { FirestoreProvider } from '@react-firebase/firestore';
 import { FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseUnAuthed } from '@react-firebase/auth';
 import { StyledFirebaseAuth } from 'react-firebaseui';
-import AccountSearch from './components/AccountSearch';
-import AccountStatement from './components/AccountStatement';
 import MyTabs from './components/Tabs';
 
 // Configure Firebase.
