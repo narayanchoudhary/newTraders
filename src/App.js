@@ -8,6 +8,7 @@ import { FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseUnAuthed } from '@rea
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import AccountSearch from './components/AccountSearch';
 import AccountStatement from './components/AccountStatement';
+import MyTabs from './components/Tabs';
 
 // Configure Firebase.
 const config = {
@@ -48,10 +49,7 @@ function App() {
       <FirestoreProvider firebase={firebase} {...config}>
         <div className="App">
           <IfFirebaseAuthed>
-            <div className="wrapper">
-              <AccountSearch />
-            </div>
-            <AccountStatement />
+            <MyTabs />
           </IfFirebaseAuthed>
           <IfFirebaseUnAuthed>
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
