@@ -7,6 +7,7 @@ import { FirestoreProvider } from '@react-firebase/firestore';
 import { FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseUnAuthed } from '@react-firebase/auth';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import AccountSearch from './components/AccountSearch';
+import AccountStatement from './components/AccountStatement';
 
 // Configure Firebase.
 const config = {
@@ -47,20 +48,10 @@ function App() {
       <FirestoreProvider firebase={firebase} {...config}>
         <div className="App">
           <IfFirebaseAuthed>
-            <AccountSearch />
-            {/* <div>
-            <h2>You're signed in 🎉 </h2>
-            <button
-              onClick={async () => {
-                await firebase
-                  .app()
-                  .auth()
-                  .signOut();
-              }}
-            >
-              Sign out
-                  </button>
-          </div> */}
+            <div className="wrapper">
+              <AccountSearch />
+            </div>
+            <AccountStatement />
           </IfFirebaseAuthed>
           <IfFirebaseUnAuthed>
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
