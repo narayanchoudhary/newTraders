@@ -18,14 +18,17 @@
       "sizes": "512x512"
     }
   ],
-  "share_target":
-  {
-    "action": "/share",
-    "params":
-    {
-      "title": "title",
-      "text": "text",
-      "url": "url"
+  "share_target": {
+    "action": "/_share-target",
+    "enctype": "multipart/form-data",
+    "method": "POST",
+    "params": {
+      "files": [{
+        "name": "media",
+        "accept": [
+          "image/*"
+        ]
+      }]
     }
   },
   "start_url": ".",
