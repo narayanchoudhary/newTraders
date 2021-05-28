@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -42,14 +42,15 @@ const uiConfig = {
 };
 
 function App() {
+  const [status, setStatus] = useState("toPay");
 
   return (
     <FirebaseAuthProvider firebase={firebase} {...config}>
       <FirestoreProvider firebase={firebase} {...config}>
         <div className="App">
           <IfFirebaseAuthed>
-            <MyTabs />
-            <PinnedSubheaderList />
+            <MyTabs setStatus={setStatus} />
+            <PinnedSubheaderList status={status} />
           </IfFirebaseAuthed>
           <IfFirebaseUnAuthed>
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />

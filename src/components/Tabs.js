@@ -6,7 +6,6 @@ import Tab from '@material-ui/core/Tab';
 import DoneAll from '@material-ui/icons/DoneAll';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import PanToolIcon from '@material-ui/icons/PanTool';
-import { FirestoreCollection } from '@react-firebase/firestore';
 
 const useStyles = makeStyles({
     root: {
@@ -22,33 +21,17 @@ const useStyles = makeStyles({
 //         return objectsByKeyValue;
 //     }, {});
 
-export default function MyTabs() {
+export default function MyTabs(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        props.setStatus(newValue);
     };
 
     return (
         <div>
-            <FirestoreCollection path="/payments/" orderBy={[{ field: "date", type: "asc" }, { field: "amount", type: "asc" }]} >
-                {
-                    payments => {
-                        console.log(payments.value);
-                        return (
-                            payments.value ?
-                                payments.value.map((payment) => {
-                                    return (
-                                        <div>
-                                            <span>{payment.amount}</span><span>{payment.name}</span>
-                                        </div>
-                                    )
-                                }) : 'Loading..'
-                        )
-                    }
-                }
-            </FirestoreCollection>
             <Paper square className={classes.root}>
                 <Tabs
                     value={value}
@@ -58,11 +41,11 @@ export default function MyTabs() {
                     textColor="secondary"
                     aria-label="icon label tabs example"
                 >
-                    <Tab icon={<AssignmentTurnedInIcon />} label="To Pay" />
-                    <Tab icon={<DoneAll />} label="Paid" />
-                    <Tab icon={<PanToolIcon />} label="OnHold" />
+                    <Tab icon={<AssignmentTurnedInIcon />} label="To Pay" value="toPay" />
+                    <Tab icon={<DoneAll />} label="Paid" value="paid" />
+                    <Tab icon={<PanToolIcon />} label="OnHold" value="onHold" />
                 </Tabs>
             </Paper>
-        </div>
+        </div >
     );
 }
