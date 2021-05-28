@@ -20,7 +20,7 @@ export default function AccountSearch() {
                         openOnFocus={true}
                         clearOnBlur={false}
                         renderInput={(params) => {
-                            // This line is just for capitalization of input :) 
+                            // This line is just for capitalization of input :) lol
                             params = { ...params, inputProps: { ...params.inputProps, style: { ...params.inputProps.style, textTransform: 'capitalize' } } }
                             return <TextField autoFocus {...params} label="Select Account" variant="outlined" />
                         }}

@@ -7,6 +7,7 @@ import { FirestoreProvider } from '@react-firebase/firestore';
 import { FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseUnAuthed } from '@react-firebase/auth';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 import MyTabs from './components/Tabs';
+import PinnedSubheaderList from './components/List';
 
 // Configure Firebase.
 const config = {
@@ -48,6 +49,7 @@ function App() {
         <div className="App">
           <IfFirebaseAuthed>
             <MyTabs />
+            <PinnedSubheaderList />
           </IfFirebaseAuthed>
           <IfFirebaseUnAuthed>
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
