@@ -1,5 +1,7 @@
 import React from 'react';
 import { FirestoreCollection } from '@react-firebase/firestore';
+import { groupByDate } from '../utilities';
+import { DateSection } from './DateSection';
 
 export default function PinnedSubheaderList(props) {
 
@@ -10,20 +12,12 @@ export default function PinnedSubheaderList(props) {
             where={{ field: "status", operator: "==", value: props.status }}
         >
             {
-                payments => {
-                    return (
-                        payments.value ?
-                            payments.value.map((payment) => {
-                                return (
-                                    <div>
-                                        <span>{payment.amount}</span>
-                                        <span>{new Date(payment.date * 1000).getDate()}</span>
-                                        <span>{payment.name}</span>
-                                        <span>{payment.status}</span>
-                                    </div>
-                                )
-                            }) : 'Loading..'
-                    )
+                data => {
+                    let paymentsGroupedByDate = groupByDate(data.value);
+
+                    return paymentsGroupedByDate.map((date) => {
+                        return <DateSection {...date} />
+                    })
                 }
             }
         </FirestoreCollection>

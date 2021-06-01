@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 export default function MyTabs(props) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState("toPay");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
