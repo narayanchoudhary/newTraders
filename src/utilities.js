@@ -6,13 +6,18 @@ export function groupByDate(payments) {
 
     let paymentsGroupedByDate = [];
 
-    let sum = payments[0].amount;
-    let nestedPayments = [payments[0]];
+    let sum = 0;
+    let nestedPayments = [];
     let date = null;
 
     payments.forEach((payment, index) => {
-        if (payment.date.toDate().setHours(0, 0, 0, 0) !== date) {
-            date = payment.date.toDate().setHours(0, 0, 0, 0)
+
+        sum = sum + payment.amount;
+        nestedPayments = [...nestedPayments, payment]
+        date = payment.date.toDate().setHours(0, 0, 0, 0);
+
+        if (!payments[index + 1] || (payments[index + 1].date.toDate().setHours(0, 0, 0, 0) !== date)) {
+
             paymentsGroupedByDate = [
                 ...paymentsGroupedByDate,
                 {
@@ -21,17 +26,10 @@ export function groupByDate(payments) {
                     nestedPayments: [...nestedPayments]
                 }
             ]
-            sum = payment.amount;
-            nestedPayments = [payment];
-        } else {
-            sum = sum + payment.amount;
-            nestedPayments = [...nestedPayments, payment]
-
+            sum = 0;
+            nestedPayments = [];
         }
-
     });
-
-    console.log(paymentsGroupedByDate);
 
     return paymentsGroupedByDate;
 };

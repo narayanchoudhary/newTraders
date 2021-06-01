@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 export function DateSection({ sum, date, nestedPayments }) {
     const classes = useStyles();
-    const [toggle, setToggle] = useState(true);
+    const [toggle, setToggle] = useState(false);
     return (
         <div style={{ maxWidth: '500px', margin: '4px' }}>
             <div style={{ border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#ecfbe74D', overflow: 'hidden' }}>

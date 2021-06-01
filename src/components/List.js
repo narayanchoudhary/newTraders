@@ -14,7 +14,6 @@ export default function PinnedSubheaderList(props) {
             {
                 data => {
                     let paymentsGroupedByDate = groupByDate(data.value);
-
                     return paymentsGroupedByDate.map((date) => {
                         return <DateSection {...date} />
                     })
